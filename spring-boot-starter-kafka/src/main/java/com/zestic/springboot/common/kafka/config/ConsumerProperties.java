@@ -23,6 +23,19 @@ import lombok.Data;
 @Data
 public class ConsumerProperties {
 
+    /**
+     * if you set this value it will make the consumer a static member of the group
+     * after disconnect if it joins back it will not be assigned a new "member id"
+     *
+     * upon leaving the consumer has up to session.timeout.ms to join back and get back its partition
+     * else they will be re-assigned without triggering a rebalance
+     */
+    private Integer groupInstanceId;
     private String groupId = "default_group";
     private String topic = "demo";
+    private Integer sessionTimeoutMs;
+    /**
+     * Offset will be commited when we call poll and if auto.commit.interval.ms has elapsed
+     */
+    private Integer autoCommitIntervalMs = 100000;
 }

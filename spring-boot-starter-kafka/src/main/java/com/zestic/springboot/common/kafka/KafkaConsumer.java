@@ -26,6 +26,7 @@ import com.zestic.springboot.common.kafka.config.KafkaProperties;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 
@@ -75,12 +76,23 @@ public class KafkaConsumer extends Kafka implements Consumer {
          * in Kafka Streams - turned on by default using StreamsPartitionAssignor
          */
         //config.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, this.properties.getConsumer().getGroupId());
+        //config.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, CooperativeStickyAssignor.class.getName());
+        //config.put(ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, CooperativeStickyAssignor.class.getName());
+
+        //auto.commit.interval.ms = 5000 and enable.auto.commit=true
+        //config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        //config.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, CooperativeStickyAssignor.class.getName());
+
         /**
          * none - if no offset is found then do not even start
          * earliest - read from the very beginning of the topic
          * latest - read from latest offset
          */
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
+        //upon leaving the consumer has up to session.timeout.ms to join back and get back its partition
+        //else they will be re-assigned without triggering a rebalance
+        //config.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "earliest");
 
         consumer = new org.apache.kafka.clients.consumer.KafkaConsumer<>(config);
     }
