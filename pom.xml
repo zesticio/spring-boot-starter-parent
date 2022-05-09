@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zestic</groupId>
+        <artifactId>zestic-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <packaging>pom</packaging>
+    <groupId>com.zestic</groupId>
+    <artifactId>spring-boot-common</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <tests.skip>true</tests.skip>
+
+        <com.zestic.common.version>1.0</com.zestic.common.version>
+        <com.zestic.springboot.common>1.0</com.zestic.springboot.common>
+        <com.zestic.springboot.common.activemq>1.0</com.zestic.springboot.common.activemq>
+    </properties>
+
+    <modules>
+        <module>spring-boot-starter-retrofit</module>
+        <module>spring-boot-starter-activemq</module>
+        <module>spring-boot-starter-activemq-test</module>
+        <module>spring-boot-starter-kafka</module>
+        <module>spring-boot-starter-kafka-test</module>
+        <module>spring-boot-starter-common</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.zestic.springboot.common</groupId>
+                <artifactId>spring-boot-starter-activemq</artifactId>
+                <version>${com.zestic.springboot.common.activemq}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zestic.springboot.common</groupId>
+                <artifactId>spring-boot-starter-common</artifactId>
+                <version>${com.zestic.springboot.common}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zestic</groupId>
+                <artifactId>common</artifactId>
+                <version>${com.zestic.common.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
