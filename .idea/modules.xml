@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/spring-boot-common.iml" filepath="$PROJECT_DIR$/.idea/spring-boot-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-common.iml" filepath="$PROJECT_DIR$/spring-boot-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-activemq/spring-boot-starter-activemq.iml" filepath="$PROJECT_DIR$/spring-boot-starter-activemq/spring-boot-starter-activemq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-activemq-test/spring-boot-starter-activemq-test.iml" filepath="$PROJECT_DIR$/spring-boot-starter-activemq-test/spring-boot-starter-activemq-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-common/spring-boot-starter-common.iml" filepath="$PROJECT_DIR$/spring-boot-starter-common/spring-boot-starter-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-kafka/spring-boot-starter-kafka.iml" filepath="$PROJECT_DIR$/spring-boot-starter-kafka/spring-boot-starter-kafka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-kafka-test/spring-boot-starter-kafka-test.iml" filepath="$PROJECT_DIR$/spring-boot-starter-kafka-test/spring-boot-starter-kafka-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-retrofit/spring-boot-starter-retrofit.iml" filepath="$PROJECT_DIR$/spring-boot-starter-retrofit/spring-boot-starter-retrofit.iml" />
     </modules>
   </component>
 </project>

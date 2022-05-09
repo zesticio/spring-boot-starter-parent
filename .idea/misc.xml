@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/spring-boot-starter-retrofit/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-starter-activemq/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-starter-activemq-test/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-starter-common/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-starter-kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-starter-kafka-test/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="corretto-11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
