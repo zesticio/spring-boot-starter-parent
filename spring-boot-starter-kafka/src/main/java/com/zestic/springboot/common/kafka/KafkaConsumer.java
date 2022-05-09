@@ -35,6 +35,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+/**
+ * Consumer group are able to restart where they have last left off if the off set is correctly committed
+ * If multiple consumer joins the same group then kafka will do a re-joining of group and it will allocated
+ * partitions to each consumer and then set the offset from where it has to read the data
+ *
+ * every time a new consumer joins the same group, other consumers will do a re-joining and partitions will be
+ * allocated fresh
+ */
 public class KafkaConsumer extends Kafka implements Consumer {
 
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(KafkaConsumer.class.getSimpleName());
@@ -52,6 +60,21 @@ public class KafkaConsumer extends Kafka implements Consumer {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ByteArraySerializer.class.getName());
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArraySerializer.class.getName());
         config.put(ConsumerConfig.GROUP_ID_CONFIG, this.properties.getConsumer().getGroupId());
+        /**
+         * RangeAssignor - assign partition on a per-topic basis (can lead to imbalance)
+         * RoundRobin - assign partition across all topics in round robin fashion, optimal balance
+         * StickyAssignor - balanced like RoundRobin and then minimises partition movements when consumer / join / leave the
+         * group in order to minimize movements
+         * CooperativeStickyAssignor - rebalance strategy is identical to StickyAssignor but supports cooperative rebalances and therefore
+         * consumer can keep on consuming from the topic
+         * The default assignor is [RangeAssignot, CooperativeStickyAssignor] which will be use the RangeAssignot by default, but allows
+         * upgrading to the CooperativeStickyAssignor with just a single rolling bounce that removes the RangeAssignor from the list
+         *
+         *
+         * in Kafka connect - cooperative rebalance is already implemented by default
+         * in Kafka Streams - turned on by default using StreamsPartitionAssignor
+         */
+        //config.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, this.properties.getConsumer().getGroupId());
         /**
          * none - if no offset is found then do not even start
          * earliest - read from the very beginning of the topic
@@ -82,6 +105,28 @@ public class KafkaConsumer extends Kafka implements Consumer {
             logger.info(record.key() + " " + record.value());
         }
         records.forEach(K -> System.out.println(K.key() + " " + K.value()));
+    }
+
+    @Override
+    public void close() throws NotImplementedException {
+        /**
+        //below code will generate an exception in listen
+        final Thread thread = Thread.currentThread();
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+
+            public void run() {
+                logger.info("Detected a shutdown, lets exit by calling consumer,wakeup()...");
+                consumer.wakeup();
+
+                //join the main thread to allow the execution of the code in the main thread
+                try {
+                    thread.join();
+                } catch (InterruptedException ex) {
+                    logger.error("", ex);
+                }
+            }
+        });**/
+        consumer.close();
     }
 
     private void subscribe() {
