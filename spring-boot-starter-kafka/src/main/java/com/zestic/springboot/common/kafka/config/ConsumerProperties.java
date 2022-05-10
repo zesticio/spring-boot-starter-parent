@@ -1,7 +1,7 @@
 /*
  * Version:  1.0.0
  *
- * Authors:  Kumar <deebendu.kumar@zestic.in>
+ * Authors:  Kumar <Deebendu Kumar>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,8 @@ public class ConsumerProperties {
     private String topic = "demo";
     private Integer sessionTimeoutMs;
     /**
-     * Offset will be commited when we call poll and if auto.commit.interval.ms has elapsed
+     * Offset will be committed when we call poll and if auto.commit.interval.ms has elapsed
+     * Kafka consumer will commit in async mode
      */
     private Integer autoCommitIntervalMs = 100000;
 }
