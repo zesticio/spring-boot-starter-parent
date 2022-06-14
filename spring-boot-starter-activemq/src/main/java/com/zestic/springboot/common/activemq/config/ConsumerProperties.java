@@ -28,4 +28,5 @@ public class ConsumerProperties {
 
     private String queueName;
     private Integer prefetchLimit = 128;
+    private Integer throughput = 128;
 }

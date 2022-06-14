@@ -19,14 +19,8 @@ package com.zestic.springboot.common.kafka;
 
 import com.zestic.common.Constants;
 import com.zestic.common.exception.NotImplementedException;
-import com.zestic.common.throttling.ThrottleImpl;
-import com.zestic.springboot.common.Client;
+import com.zestic.springboot.common.mq.Client;
 import com.zestic.springboot.common.kafka.config.KafkaProperties;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Properties;
 
 public class Kafka implements Client {
 

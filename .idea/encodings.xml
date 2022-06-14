@@ -5,7 +5,10 @@
     <file url="file://$PROJECT_DIR$/spring-boot-starter-activemq/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot-starter-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot-starter-kafka-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-boot-starter-kafka-test/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot-starter-kafka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-boot-starter-kafka/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot-starter-retrofit/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-boot-starter-retrofit/src/main/resources" charset="UTF-8" />
   </component>
 </project>

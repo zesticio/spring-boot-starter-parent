@@ -18,11 +18,7 @@
 
 package com.zestic.springboot.common.activemq.model;
 
-import com.zestic.common.utils.Error;
 import lombok.Getter;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Getter
 public enum JMSDeliveryMode {

@@ -18,9 +18,9 @@
 
 package com.zestic.springboot.common.kafka;
 
-import com.zestic.springboot.common.Broker;
-import com.zestic.springboot.common.Consumer;
-import com.zestic.springboot.common.Producer;
+import com.zestic.springboot.common.mq.Broker;
+import com.zestic.springboot.common.mq.Consumer;
+import com.zestic.springboot.common.mq.Producer;
 
 public class KafkaFactory implements Broker {
 

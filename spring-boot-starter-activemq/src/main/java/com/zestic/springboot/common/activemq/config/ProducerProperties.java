@@ -21,6 +21,7 @@ package com.zestic.springboot.common.activemq.config;
 import com.zestic.springboot.common.activemq.model.JMSDeliveryMode;
 import com.zestic.springboot.common.activemq.model.JMSPriority;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 @Data
 public class ProducerProperties {
@@ -33,4 +34,5 @@ public class ProducerProperties {
     private Boolean disableJmsMessageId = false;
     private JMSPriority jmsPriority = JMSPriority.NORMAL;
     private Boolean disableMessageTimestamp = false;
+    private Integer throughput = 128;
 }

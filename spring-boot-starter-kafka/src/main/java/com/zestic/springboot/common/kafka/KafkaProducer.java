@@ -18,26 +18,20 @@
 
 package com.zestic.springboot.common.kafka;
 
-import com.zestic.common.Constants;
 import com.zestic.common.entity.Message;
 import com.zestic.common.exception.ApplicationRuntimeException;
 import com.zestic.common.exception.NotImplementedException;
-import com.zestic.springboot.common.Producer;
 import com.zestic.springboot.common.kafka.config.KafkaProperties;
-import lombok.extern.flogger.Flogger;
+import com.zestic.springboot.common.mq.Producer;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.apache.kafka.clients.producer.internals.DefaultPartitioner;
-import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
-import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.util.SerializationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 public class KafkaProducer extends Kafka implements Producer {
 

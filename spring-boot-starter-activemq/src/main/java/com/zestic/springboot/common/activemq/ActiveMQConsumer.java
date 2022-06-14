@@ -21,8 +21,9 @@ package com.zestic.springboot.common.activemq;
 import com.zestic.common.entity.Message;
 import com.zestic.common.exception.ApplicationException;
 import com.zestic.common.exception.ApplicationRuntimeException;
-import com.zestic.springboot.common.Consumer;
+import com.zestic.common.exception.NotImplementedException;
 import com.zestic.springboot.common.activemq.config.ActiveMQProperties;
+import com.zestic.springboot.common.mq.Consumer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -41,7 +42,7 @@ import javax.jms.JMSException;
  */
 @Getter
 @Setter
-public class ActiveMQConsumer extends ActiveMQ implements Consumer {
+public class ActiveMQConsumer extends ActiveMQClient implements Consumer {
 
     private static final Logger logger = LoggerFactory.getLogger(ActiveMQConsumer.class.getSimpleName());
 
@@ -58,8 +59,8 @@ public class ActiveMQConsumer extends ActiveMQ implements Consumer {
      * @throws ApplicationRuntimeException
      */
     public void create() throws ApplicationRuntimeException {
-        super.create();
         try {
+            super.create();
             destination = (ActiveMQQueue) session.createQueue(this.properties.getConsumer().getQueueName());
             consumer = (ActiveMQMessageConsumer) session.createConsumer(destination);
             consumer.start();
@@ -92,5 +93,15 @@ public class ActiveMQConsumer extends ActiveMQ implements Consumer {
             }
         }
         return message;
+    }
+
+    @Override
+    public void listen() throws NotImplementedException {
+
+    }
+
+    @Override
+    public void process() {
+
     }
 }

@@ -50,7 +50,6 @@ public class AnnotationScanner {
      *
      * @param packageName
      * @param annotationClass
-     * @return
      */
     public void scan(String packageName, Class<? extends Annotation> annotationClass) {
         Collection<Class<?>> classes = ClassInspectionUtil.findAnnotatedClasses(HttpInterceptor.class, packageName);

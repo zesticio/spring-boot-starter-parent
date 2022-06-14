@@ -18,8 +18,11 @@
 
 package com.zestic.springboot.common.activemq.config;
 
+import com.zestic.springboot.common.activemq.ActiveMQClient;
 import com.zestic.springboot.common.activemq.ActiveMQConsumer;
 import com.zestic.springboot.common.activemq.ActiveMQProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -30,6 +33,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(ActiveMQProperties.class)
 public class ActiveMQAutoConfiguration01 implements ApplicationContextAware {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActiveMQAutoConfiguration01.class.getSimpleName());
 
     private final ActiveMQProperties properties;
     private ApplicationContext applicationContext;
@@ -45,11 +50,13 @@ public class ActiveMQAutoConfiguration01 implements ApplicationContextAware {
 
     @Bean
     public ActiveMQConsumer activeMQConsumer() {
+        logger.info("Creating activemq consumer bean");
         return new ActiveMQConsumer(properties);
     }
 
     @Bean
     public ActiveMQProducer activeMQProducer() {
+        logger.info("Creating activemq producer bean");
         return new ActiveMQProducer(properties);
     }
 }

@@ -5,20 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.zestic</groupId>
-        <artifactId>zestic-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
     </parent>
     <packaging>pom</packaging>
-    <groupId>com.zestic</groupId>
-    <artifactId>spring-boot-common</artifactId>
-    <version>1.0</version>
+    <groupId>com.zestic.springboot.common</groupId>
+    <artifactId>spring-boot-starter-common-parent</artifactId>
+    <name>spring-boot-starter-common-parent</name>
+    <version>1.0.0</version>
 
     <properties>
         <tests.skip>true</tests.skip>
 
-        <com.zestic.common.version>1.0</com.zestic.common.version>
-        <com.zestic.springboot.common>1.0</com.zestic.springboot.common>
-        <com.zestic.springboot.common.activemq>1.0</com.zestic.springboot.common.activemq>
+        <com.zestic.springboot.common.version>1.0.0</com.zestic.springboot.common.version>
+        <com.zestic.springboot.common.activemq.version>1.0.0</com.zestic.springboot.common.activemq.version>
+        <com.zestic.springboot.common.kafka.version>1.0.0</com.zestic.springboot.common.kafka.version>
+        <com.zestic.springboot.common.retrofit.version>1.0.0</com.zestic.springboot.common.retrofit.version>
     </properties>
 
     <modules>
@@ -35,19 +37,36 @@
             <dependency>
                 <groupId>com.zestic.springboot.common</groupId>
                 <artifactId>spring-boot-starter-activemq</artifactId>
-                <version>${com.zestic.springboot.common.activemq}</version>
+                <version>${com.zestic.springboot.common.activemq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zestic.springboot.common</groupId>
+                <artifactId>spring-boot-starter-kafka</artifactId>
+                <version>${com.zestic.springboot.common.kafka.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zestic.springboot.common</groupId>
+                <artifactId>spring-boot-starter-retrofit</artifactId>
+                <version>${com.zestic.springboot.common.retrofit.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zestic.springboot.common</groupId>
                 <artifactId>spring-boot-starter-common</artifactId>
-                <version>${com.zestic.springboot.common}</version>
+                <version>${com.zestic.springboot.common.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zestic</groupId>
                 <artifactId>common</artifactId>
-                <version>${com.zestic.common.version}</version>
+                <version>${com.zestic.tools.common.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zestic</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

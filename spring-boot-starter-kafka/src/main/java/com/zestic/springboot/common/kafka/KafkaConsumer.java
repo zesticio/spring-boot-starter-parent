@@ -21,20 +21,18 @@ package com.zestic.springboot.common.kafka;
 import com.zestic.common.Constants;
 import com.zestic.common.entity.Message;
 import com.zestic.common.exception.NotImplementedException;
-import com.zestic.springboot.common.Consumer;
 import com.zestic.springboot.common.kafka.config.KafkaProperties;
+import com.zestic.springboot.common.mq.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 
 import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 /**
  * Consumer group are able to restart where they have last left off if the off set is correctly committed
@@ -148,5 +146,9 @@ public class KafkaConsumer extends Kafka implements Consumer {
 
         //to listen to single topic
         consumer.subscribe(Collections.singleton(this.properties.getConsumer().getTopic()));
+    }
+
+    private void test(Optional<String> code) {
+
     }
 }

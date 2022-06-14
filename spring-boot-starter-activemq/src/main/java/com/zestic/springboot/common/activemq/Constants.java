@@ -18,11 +18,12 @@
 
 package com.zestic.springboot.common.activemq;
 
-import com.zestic.common.utils.Error;
-
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * runtime error code starting from 0x100000
+ */
 public enum Constants {
 
     RTE_SESSION_NULL(0x100000, "Runtime exception session is null or not running"),
@@ -31,12 +32,17 @@ public enum Constants {
     RTE_UNABLE_ESTABLISH_CONNECTION(0x100003, "Runtime exception, unable to establish connection"),
     RTE_UNABLE_CREATE_PRODUCER(0x100004, "Runtime exception, unable to create producer"),
     RTE_UNABLE_CREATE_CONSUMER(0x100005, "Runtime exception, unable to create producer"),
-    RTE_UNABLE_PROCESS_INCOMING_MESSAGE(0x100006, "Runtime exception, unable to process incoming message");
+    RTE_UNABLE_PROCESS_INCOMING_MESSAGE(0x100006, "Runtime exception, unable to process incoming message"),
+    RTE_JMS_EXCEPTION(0x100007, "Runtime exception, Java messaging service exception"),
+    RTE_UNABLE_CREATE_OBJECT_MESSAGE(0x100008, "Runtime exception, Unable to create object message"),
+    RTE_JMS_EXPIRATION(0x100009, "Runtime exception, Unable to set JMS expiration value"),
+    RTE_UNABLE_SET_MESSAGE_ID(0x100010, "Runtime exception, Unable to set JMS message id"),
+    RTE_UNABLE_ENABLE_MESSAGE_TIMESTAMP(0x100011, "Runtime exception, Unable to enable message timestamp");
 
-    private static final Map<Integer, Error> LOOKUP = new HashMap<Integer, Error>();
+    private static final Map<Integer, Constants> LOOKUP = new HashMap<>();
 
     static {
-        for (final Error enumeration : Error.values()) {
+        for (final Constants enumeration : Constants.values()) {
             LOOKUP.put(enumeration.getCode(), enumeration);
         }
     }
@@ -57,5 +63,4 @@ public enum Constants {
     public String getMessage() {
         return message;
     }
-
 }
