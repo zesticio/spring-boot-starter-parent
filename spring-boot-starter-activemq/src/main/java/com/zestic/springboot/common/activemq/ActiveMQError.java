@@ -18,13 +18,17 @@
 
 package com.zestic.springboot.common.activemq;
 
+import com.zestic.springboot.common.exception.ApplicationError;
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * runtime error code starting from 0x100000
  */
-public enum Constants {
+@Getter
+public enum ActiveMQError implements ApplicationError {
 
     RTE_SESSION_NULL(0x100000, "Runtime exception session is null or not running"),
     RTE_PRODUCER_NULL(0x100001, "Runtime exception, producer is null or not connected"),
@@ -39,28 +43,12 @@ public enum Constants {
     RTE_UNABLE_SET_MESSAGE_ID(0x100010, "Runtime exception, Unable to set JMS message id"),
     RTE_UNABLE_ENABLE_MESSAGE_TIMESTAMP(0x100011, "Runtime exception, Unable to enable message timestamp");
 
-    private static final Map<Integer, Constants> LOOKUP = new HashMap<>();
-
-    static {
-        for (final Constants enumeration : Constants.values()) {
-            LOOKUP.put(enumeration.getCode(), enumeration);
-        }
-    }
-
     private final Integer code;
 
     private final String message;
 
-    private Constants(final Integer code, final String message) {
+    private ActiveMQError(final Integer code, final String message) {
         this.code = code;
         this.message = message;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }

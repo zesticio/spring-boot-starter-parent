@@ -30,6 +30,7 @@
         <module>spring-boot-starter-kafka</module>
         <module>spring-boot-starter-kafka-test</module>
         <module>spring-boot-starter-common</module>
+        <module>spring-boot-starter-cache</module>
     </modules>
 
     <dependencyManagement>
@@ -54,19 +55,10 @@
                 <artifactId>spring-boot-starter-common</artifactId>
                 <version>${com.zestic.springboot.common.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.zestic</groupId>
-                <artifactId>common</artifactId>
-                <version>${com.zestic.tools.common.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>com.zestic</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

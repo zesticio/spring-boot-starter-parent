@@ -19,7 +19,7 @@
 package com.zestic.springboot.common.activemq;
 
 import com.google.common.util.concurrent.RateLimiter;
-import com.zestic.common.utils.ProcessingThread;
+import com.zestic.springboot.common.util.ProcessingThread;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentLinkedQueue;

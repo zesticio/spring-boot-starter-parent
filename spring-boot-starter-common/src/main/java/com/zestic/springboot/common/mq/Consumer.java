@@ -18,11 +18,12 @@
 
 package com.zestic.springboot.common.mq;
 
-import com.zestic.common.entity.Message;
-import com.zestic.common.exception.NotImplementedException;
+import com.zestic.springboot.common.entity.Message;
+import com.zestic.springboot.common.exception.NotImplementedException;
 
 public interface Consumer {
 
     Message receive() throws NotImplementedException;
+
     void listen() throws NotImplementedException;
 }

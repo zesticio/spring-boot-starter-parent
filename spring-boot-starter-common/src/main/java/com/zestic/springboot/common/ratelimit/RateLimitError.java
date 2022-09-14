@@ -18,7 +18,7 @@
 
 package com.zestic.springboot.common.ratelimit;
 
-import com.zestic.common.utils.HTTPErrorCodes;
+import com.zestic.springboot.common.util.HTTPErrorCodes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,7 @@ public enum RateLimitError {
     ROK(0x00000000, "Success"),
     RATE_LIMIT_EXCEEDED(0x00000058, "Limit Exceeded, Too many request");
 
-    private static final Map<Integer, HTTPErrorCodes> LOOKUP = new HashMap<Integer, HTTPErrorCodes>();
+    private static final Map<Integer, HTTPErrorCodes> LOOKUP = new HashMap<>();
 
     static {
         for (final HTTPErrorCodes enumeration : HTTPErrorCodes.values()) {

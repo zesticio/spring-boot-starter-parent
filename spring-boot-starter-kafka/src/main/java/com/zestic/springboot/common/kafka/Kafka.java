@@ -17,8 +17,8 @@
  */
 package com.zestic.springboot.common.kafka;
 
-import com.zestic.common.Constants;
-import com.zestic.common.exception.NotImplementedException;
+import com.zestic.springboot.common.exception.GenericError;
+import com.zestic.springboot.common.exception.NotImplementedException;
 import com.zestic.springboot.common.mq.Client;
 import com.zestic.springboot.common.kafka.config.KafkaProperties;
 
@@ -34,11 +34,11 @@ public class Kafka implements Client {
 
     @Override
     public void create() throws NotImplementedException {
-        throw new NotImplementedException(Constants.RTE_METHOD_NOT_IMPL.getCode(), Constants.RTE_METHOD_NOT_IMPL.getMessage());
+        throw new NotImplementedException(GenericError.RTE_METHOD_NOT_IMPL);
     }
 
     @Override
     public void close() throws NotImplementedException {
-        throw new NotImplementedException(Constants.RTE_METHOD_NOT_IMPL.getCode(), Constants.RTE_METHOD_NOT_IMPL.getMessage());
+        throw new NotImplementedException(GenericError.RTE_METHOD_NOT_IMPL);
     }
 }

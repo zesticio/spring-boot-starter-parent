@@ -18,13 +18,11 @@
 
 package com.zestic.springboot.common.ratelimit;
 
-import com.zestic.common.exception.ApplicationRuntimeException;
-
 public class RateLimitException extends Exception {
 
     private static final long serialVersionUID = -1771088537167544111L;
 
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ApplicationRuntimeException.class);
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RateLimitException.class);
 
     private Integer code;
 

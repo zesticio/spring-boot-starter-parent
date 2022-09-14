@@ -18,7 +18,7 @@
 
 package com.zestic.springboot.common.mq;
 
-import com.zestic.common.exception.NotImplementedException;
+import com.zestic.springboot.common.exception.NotImplementedException;
 
 public interface Client {
 

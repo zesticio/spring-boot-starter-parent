@@ -18,9 +18,9 @@
 
 package com.zestic.springboot.common.kafka;
 
-import com.zestic.common.Constants;
-import com.zestic.common.entity.Message;
-import com.zestic.common.exception.NotImplementedException;
+import com.zestic.springboot.common.entity.Message;
+import com.zestic.springboot.common.exception.GenericError;
+import com.zestic.springboot.common.exception.NotImplementedException;
 import com.zestic.springboot.common.kafka.config.KafkaProperties;
 import com.zestic.springboot.common.mq.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -38,7 +38,7 @@ import java.util.Optional;
  * Consumer group are able to restart where they have last left off if the off set is correctly committed
  * If multiple consumer joins the same group then kafka will do a re-joining of group and it will allocated
  * partitions to each consumer and then set the offset from where it has to read the data
- *
+ * <p>
  * every time a new consumer joins the same group, other consumers will do a re-joining and partitions will be
  * allocated fresh
  */
@@ -102,7 +102,7 @@ public class KafkaConsumer extends Kafka implements Consumer {
      */
     @Override
     public Message receive() throws NotImplementedException {
-        throw new NotImplementedException(com.zestic.common.Constants.RTE_METHOD_NOT_IMPL.getCode(), Constants.RTE_METHOD_NOT_IMPL.getMessage());
+        throw new NotImplementedException(GenericError.RTE_METHOD_NOT_IMPL);
     }
 
     @Override
@@ -120,22 +120,22 @@ public class KafkaConsumer extends Kafka implements Consumer {
     @Override
     public void close() throws NotImplementedException {
         /**
-        //below code will generate an exception in listen
-        final Thread thread = Thread.currentThread();
-        Runtime.getRuntime().addShutdownHook(new Thread() {
+         //below code will generate an exception in listen
+         final Thread thread = Thread.currentThread();
+         Runtime.getRuntime().addShutdownHook(new Thread() {
 
-            public void run() {
-                logger.info("Detected a shutdown, lets exit by calling consumer,wakeup()...");
-                consumer.wakeup();
+         public void run() {
+         logger.info("Detected a shutdown, lets exit by calling consumer,wakeup()...");
+         consumer.wakeup();
 
-                //join the main thread to allow the execution of the code in the main thread
-                try {
-                    thread.join();
-                } catch (InterruptedException ex) {
-                    logger.error("", ex);
-                }
-            }
-        });**/
+         //join the main thread to allow the execution of the code in the main thread
+         try {
+         thread.join();
+         } catch (InterruptedException ex) {
+         logger.error("", ex);
+         }
+         }
+         });**/
         consumer.close();
     }
 

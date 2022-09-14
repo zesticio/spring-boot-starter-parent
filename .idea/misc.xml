@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/spring-boot-starter-kafka/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-starter-kafka-test/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-starter-cache/pom.xml" />
       </list>
     </option>
   </component>

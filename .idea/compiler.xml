@@ -7,11 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="spring-boot-starter-kafka" />
-        <module name="spring-boot-starter-kafka-test" />
         <module name="spring-boot-starter-common" />
         <module name="spring-boot-starter-activemq-test" />
         <module name="spring-boot-starter-retrofit" />
+        <module name="spring-boot-starter-kafka" />
+        <module name="spring-boot-starter-cache" />
+        <module name="spring-boot-starter-kafka-test" />
         <module name="spring-boot-starter-activemq" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
       <module name="spring-boot-common" target="11" />
       <module name="spring-boot-starter-activemq" target="11" />
       <module name="spring-boot-starter-activemq-test" target="11" />
+      <module name="spring-boot-starter-cache" target="11" />
       <module name="spring-boot-starter-common" target="11" />
       <module name="spring-boot-starter-kafka" target="11" />
       <module name="spring-boot-starter-kafka-test" target="11" />
@@ -29,6 +31,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="spring-boot-starter-activemq" options="-parameters" />
       <module name="spring-boot-starter-activemq-test" options="-parameters" />
+      <module name="spring-boot-starter-cache" options="-parameters" />
       <module name="spring-boot-starter-common" options="-parameters" />
       <module name="spring-boot-starter-kafka" options="-parameters" />
       <module name="spring-boot-starter-kafka-test" options="-parameters" />

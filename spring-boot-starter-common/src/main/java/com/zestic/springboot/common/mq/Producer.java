@@ -18,14 +18,16 @@
 
 package com.zestic.springboot.common.mq;
 
-import com.zestic.common.entity.Message;
-import com.zestic.common.exception.ApplicationRuntimeException;
+import com.zestic.springboot.common.entity.Message;
+import com.zestic.springboot.common.exception.ApplicationException;
 
 import java.util.Map;
 
 public interface Producer {
 
-    void submit(Message message) throws ApplicationRuntimeException;
-    void submit(Message message, Map<String, Object> optional) throws ApplicationRuntimeException;
-    void flush() throws ApplicationRuntimeException;
+    void submit(Message message) throws ApplicationException;
+
+    void submit(Message message, Map<String, Object> optional) throws ApplicationException;
+
+    void flush() throws ApplicationException;
 }

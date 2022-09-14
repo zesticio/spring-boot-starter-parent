@@ -18,11 +18,11 @@
 
 package com.zestic.springboot.common.activemq;
 
-import com.zestic.common.entity.Message;
-import com.zestic.common.exception.ApplicationException;
-import com.zestic.common.exception.ApplicationRuntimeException;
-import com.zestic.common.exception.NotImplementedException;
 import com.zestic.springboot.common.activemq.config.ActiveMQProperties;
+import com.zestic.springboot.common.activemq.exception.ActiveMQRuntimeException;
+import com.zestic.springboot.common.entity.Message;
+import com.zestic.springboot.common.exception.ApplicationException;
+import com.zestic.springboot.common.exception.NotImplementedException;
 import com.zestic.springboot.common.mq.Consumer;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,18 +56,16 @@ public class ActiveMQConsumer extends ActiveMQClient implements Consumer {
      * The JMS API also provides the ability to asynchronously receive messages. The JMS
      * provider will push messages to the consumer.
      *
-     * @throws ApplicationRuntimeException
+     * @throws ApplicationException
      */
-    public void create() throws ApplicationRuntimeException {
+    public void create() throws ApplicationException {
         try {
             super.create();
             destination = (ActiveMQQueue) session.createQueue(this.properties.getConsumer().getQueueName());
             consumer = (ActiveMQMessageConsumer) session.createConsumer(destination);
             consumer.start();
         } catch (JMSException e) {
-            throw new ApplicationRuntimeException(new ApplicationException(
-                    Constants.RTE_UNABLE_CREATE_CONSUMER.getCode(),
-                    Constants.RTE_UNABLE_CREATE_CONSUMER.getMessage()));
+            throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_CREATE_CONSUMER, e.getMessage());
         }
     }
 

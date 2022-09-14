@@ -18,7 +18,7 @@
 
 package com.zestic.springboot.common.activemq.backup;
 
-import com.zestic.common.entity.Message;
+import com.zestic.springboot.common.entity.Message;
 
 public class Example {
 

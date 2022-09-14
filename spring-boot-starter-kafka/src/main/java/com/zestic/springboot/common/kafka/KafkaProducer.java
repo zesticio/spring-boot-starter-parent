@@ -18,9 +18,9 @@
 
 package com.zestic.springboot.common.kafka;
 
-import com.zestic.common.entity.Message;
-import com.zestic.common.exception.ApplicationRuntimeException;
-import com.zestic.common.exception.NotImplementedException;
+import com.zestic.springboot.common.entity.Message;
+import com.zestic.springboot.common.exception.ApplicationException;
+import com.zestic.springboot.common.exception.NotImplementedException;
 import com.zestic.springboot.common.kafka.config.KafkaProperties;
 import com.zestic.springboot.common.mq.Producer;
 import org.apache.kafka.clients.producer.Callback;
@@ -55,7 +55,7 @@ public class KafkaProducer extends Kafka implements Producer {
     }
 
     @Override
-    public void submit(Message message) throws ApplicationRuntimeException {
+    public void submit(Message message) throws ApplicationException {
         this.producer.send(
                 createProducerRecord(this.properties.getProducer().getTopic(),
                         SerializationUtils.serialize(message)), new Callback() {
@@ -76,7 +76,7 @@ public class KafkaProducer extends Kafka implements Producer {
     }
 
     @Override
-    public void submit(Message message, Map<String, Object> optional) throws ApplicationRuntimeException {
+    public void submit(Message message, Map<String, Object> optional) throws ApplicationException {
     }
 
     @Override
@@ -86,10 +86,11 @@ public class KafkaProducer extends Kafka implements Producer {
 
     /**
      * its a synchronous call
-     * @throws ApplicationRuntimeException
+     *
+     * @throws ApplicationException
      */
     @Override
-    public void flush() throws ApplicationRuntimeException {
+    public void flush() throws ApplicationException {
         this.producer.flush();
     }
 
@@ -99,6 +100,7 @@ public class KafkaProducer extends Kafka implements Producer {
 
     /**
      * all messages that share the same key goes to the same partition
+     *
      * @param topic
      * @param key
      * @param data

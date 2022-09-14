@@ -18,9 +18,7 @@
 
 package com.zestic.springboot.common.handlers;
 
-import com.zestic.common.entity.Result;
-import com.zestic.common.exception.ApplicationException;
-import com.zestic.common.exception.ApplicationRuntimeException;
+import com.zestic.springboot.common.entity.Result;
 import com.zestic.springboot.common.ratelimit.RateLimitException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -51,7 +49,7 @@ public class BaseGlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .stream()
                 .map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
-        Result<List<String>> result = new Result(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+        Result<List<String>> result = new Result<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
         result.setData(errors);
         return new ResponseEntity<>(result, headers, status);
     }
@@ -60,24 +58,6 @@ public class BaseGlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Result> rateLimitException(RateLimitException ex, WebRequest request) throws IOException {
         logger.error("Rate limit exception", ex);
         return createErrorResponseEntity(ex, HttpStatus.TOO_MANY_REQUESTS, HttpStatus.TOO_MANY_REQUESTS.value());
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<Result> constraintViolationException(ApplicationRuntimeException ex, WebRequest request) throws IOException {
-        logger.error("Constraint violation exception", ex);
-        return createErrorResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-    @ExceptionHandler(ApplicationRuntimeException.class)
-    public final ResponseEntity<Result> applicationRuntimeExceptionHandler(ApplicationRuntimeException ex, WebRequest request) {
-        logger.error("Application runtime exception", ex);
-        return createErrorResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-    @ExceptionHandler(ApplicationException.class)
-    public final ResponseEntity<Result> applicationExceptionHandler(ApplicationException ex, WebRequest request) {
-        logger.error("Application exception", ex);
-        return createErrorResponseEntity(ex, HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
     @ExceptionHandler(Exception.class)

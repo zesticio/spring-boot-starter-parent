@@ -18,9 +18,8 @@
 
 package com.zestic.springboot.common.retrofit.boot;
 
-import com.zestic.common.utils.ClassInspectionUtil;
+import com.zestic.springboot.common.inspection.ClassInspectionUtil;
 import com.zestic.springboot.common.retrofit.annotation.HttpInterceptor;
-import com.zestic.springboot.common.retrofit.interceptor.EncryptionInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

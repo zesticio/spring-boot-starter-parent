@@ -18,7 +18,7 @@
 
 package com.zestic.springboot.common.retrofit.boot;
 
-import com.zestic.common.utils.ClassInspectionUtil;
+import com.zestic.springboot.common.inspection.ClassInspectionUtil;
 import com.zestic.springboot.common.retrofit.annotation.EnableRetrofitClient;
 import com.zestic.springboot.common.retrofit.annotation.HttpInterceptor;
 import com.zestic.springboot.common.retrofit.boot.context.RetrofitInterceptorContext;

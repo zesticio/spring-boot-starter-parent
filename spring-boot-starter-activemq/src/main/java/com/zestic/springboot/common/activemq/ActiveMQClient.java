@@ -18,11 +18,12 @@
 
 package com.zestic.springboot.common.activemq;
 
-import com.zestic.common.exception.ApplicationException;
-import com.zestic.common.exception.ApplicationRuntimeException;
-import com.zestic.common.utils.ProcessingThread;
+import com.zestic.springboot.common.activemq.exception.ActiveMQRuntimeException;
+import com.zestic.springboot.common.exception.ApplicationException;
+import com.zestic.springboot.common.exception.SystemError;
 import com.zestic.springboot.common.mq.Client;
 import com.zestic.springboot.common.activemq.config.ActiveMQProperties;
+import com.zestic.springboot.common.util.ProcessingThread;
 import lombok.SneakyThrows;
 import org.apache.activemq.*;
 import org.apache.activemq.command.ActiveMQDestination;
@@ -54,7 +55,7 @@ public abstract class ActiveMQClient extends ProcessingThread implements Client,
         this.properties = properties;
     }
 
-    public void create() throws ApplicationRuntimeException {
+    public void create() throws ApplicationException {
         String uri = "failover:("
                 + properties.getPrimary() + ","
                 + properties.getSecondary() + ")?randomize=false";
@@ -90,7 +91,7 @@ public abstract class ActiveMQClient extends ProcessingThread implements Client,
         } catch (JMSException ex) {
             logger.error("Exception occurred, closing the connection");
             this.close();
-            throw new ApplicationRuntimeException(new ApplicationException(Constants.RTE_UNABLE_ESTABLISH_CONNECTION.getCode(), Constants.RTE_UNABLE_ESTABLISH_CONNECTION.getMessage()));
+            throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_ESTABLISH_CONNECTION, ex.getMessage());
         }
     }
 
@@ -107,6 +108,6 @@ public abstract class ActiveMQClient extends ProcessingThread implements Client,
     @Override
     public void onException(JMSException e) {
         logger.error("Exception ", e);
-        throw new ApplicationRuntimeException(new ApplicationException(Constants.RTE_JMS_EXCEPTION.getCode(), Constants.RTE_JMS_EXCEPTION.getMessage()));
+        throw new ActiveMQRuntimeException(ActiveMQError.RTE_JMS_EXCEPTION, e.getMessage());
     }
 }
