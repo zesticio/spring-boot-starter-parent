@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.zestic.springboot.common.web.client.annotation.WebClientAutoConfiguration

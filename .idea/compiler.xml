@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-boot-starter-common" />
+        <module name="spring-boot-starter-webclient" />
         <module name="spring-boot-starter-activemq-test" />
         <module name="spring-boot-starter-retrofit" />
         <module name="spring-boot-starter-kafka" />
@@ -25,6 +26,7 @@
       <module name="spring-boot-starter-kafka" target="11" />
       <module name="spring-boot-starter-kafka-test" target="11" />
       <module name="spring-boot-starter-retrofit" target="11" />
+      <module name="spring-boot-starter-webclient" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -36,6 +38,7 @@
       <module name="spring-boot-starter-kafka" options="-parameters" />
       <module name="spring-boot-starter-kafka-test" options="-parameters" />
       <module name="spring-boot-starter-retrofit" options="-parameters" />
+      <module name="spring-boot-starter-webclient" options="-parameters" />
     </option>
   </component>
 </project>

@@ -26,7 +26,6 @@ import com.zestic.springboot.common.entity.Message;
 import com.zestic.springboot.common.exception.ApplicationException;
 import com.zestic.springboot.common.exception.GenericError;
 import com.zestic.springboot.common.exception.NotImplementedException;
-import com.zestic.springboot.common.exception.SystemError;
 import com.zestic.springboot.common.mq.Producer;
 import lombok.Getter;
 import lombok.Setter;

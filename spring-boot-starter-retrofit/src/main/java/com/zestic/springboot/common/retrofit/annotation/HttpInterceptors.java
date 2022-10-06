@@ -25,6 +25,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HttpInterceptors {
 
-    HttpInterceptor[] value() default {
-    };
+    HttpInterceptor[] value() default {};
 }

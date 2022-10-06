@@ -11,5 +11,6 @@
     <file url="file://$PROJECT_DIR$/spring-boot-starter-kafka/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot-starter-retrofit/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/spring-boot-starter-retrofit/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spring-boot-starter-webclient/src/main/java" charset="UTF-8" />
   </component>
 </project>

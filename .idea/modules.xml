@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-kafka/spring-boot-starter-kafka.iml" filepath="$PROJECT_DIR$/spring-boot-starter-kafka/spring-boot-starter-kafka.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-kafka-test/spring-boot-starter-kafka-test.iml" filepath="$PROJECT_DIR$/spring-boot-starter-kafka-test/spring-boot-starter-kafka-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-retrofit/spring-boot-starter-retrofit.iml" filepath="$PROJECT_DIR$/spring-boot-starter-retrofit/spring-boot-starter-retrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-webclient/spring-boot-starter-webclient.iml" filepath="$PROJECT_DIR$/spring-boot-starter-webclient/spring-boot-starter-webclient.iml" />
     </modules>
   </component>
 </project>

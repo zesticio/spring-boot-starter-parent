@@ -20,7 +20,6 @@ package com.zestic.springboot.common.activemq;
 
 import com.zestic.springboot.common.activemq.exception.ActiveMQRuntimeException;
 import com.zestic.springboot.common.exception.ApplicationException;
-import com.zestic.springboot.common.exception.SystemError;
 import com.zestic.springboot.common.mq.Client;
 import com.zestic.springboot.common.activemq.config.ActiveMQProperties;
 import com.zestic.springboot.common.util.ProcessingThread;
