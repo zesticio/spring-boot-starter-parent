@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>spring-boot-starter-common-parent</artifactId>
-        <groupId>com.zestic.springboot.common</groupId>
+        <groupId>in.zestic.springboot.common</groupId>
         <version>1.0.0</version>
     </parent>
-    <groupId>com.zestic.springboot.common.web.client</groupId>
+    <groupId>in.zestic.springboot.common.web.client</groupId>
     <artifactId>spring-boot-starter-webclient</artifactId>
     <name>spring-boot-starter-webclient</name>
     <description>Demo project for Spring Boot</description>
@@ -23,7 +23,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.zestic.springboot.common</groupId>
+            <groupId>in.zestic.springboot.common</groupId>
             <artifactId>spring-boot-starter-common</artifactId>
         </dependency>
 
