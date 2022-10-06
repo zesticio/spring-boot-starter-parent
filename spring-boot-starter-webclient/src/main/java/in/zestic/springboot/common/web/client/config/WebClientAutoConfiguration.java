@@ -1,7 +1,5 @@
-package in.zestic.springboot.common.web.client.annotation;
+package in.zestic.springboot.common.web.client.config;
 
-import in.zestic.springboot.common.web.client.config.WebClientConfigBean;
-import in.zestic.springboot.common.web.client.config.WebClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -12,9 +10,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ComponentScan
 @EnableConfigurationProperties(WebClientProperties.class)
 @AutoConfigureAfter({JacksonAutoConfiguration.class})
 public class WebClientAutoConfiguration implements ApplicationContextAware {

@@ -19,6 +19,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="spring-boot-common" target="11" />
+      <module name="spring-boot-keycloak-bom" target="11" />
       <module name="spring-boot-starter-activemq" target="11" />
       <module name="spring-boot-starter-activemq-test" target="11" />
       <module name="spring-boot-starter-cache" target="11" />
@@ -31,6 +32,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spring-boot-keycloak-bom" options="" />
       <module name="spring-boot-starter-activemq" options="-parameters" />
       <module name="spring-boot-starter-activemq-test" options="-parameters" />
       <module name="spring-boot-starter-cache" options="-parameters" />

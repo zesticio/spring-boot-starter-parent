@@ -1,6 +1,7 @@
 package in.zestic.springboot.common.web.client.config;
 
 import in.zestic.springboot.common.web.client.annotation.WebClient;
+import in.zestic.springboot.common.web.client.handler.WebClientInvocationHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -23,9 +24,9 @@ public class WebClientFactoryBean<T> implements FactoryBean<T>, EnvironmentAware
     private ApplicationContext applicationContext;
     private WebClient webClient;
 
-    public WebClientFactoryBean(Class<T> retrofitInterface) {
-        this.webClientInterface = retrofitInterface;
-        webClient = retrofitInterface.getAnnotation(WebClient.class);
+    public WebClientFactoryBean(Class<T> webClientInterface) {
+        this.webClientInterface = webClientInterface;
+        webClient = webClientInterface.getAnnotation(WebClient.class);
     }
 
     @Override

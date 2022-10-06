@@ -33,31 +33,6 @@
         <module>spring-boot-starter-common</module>
         <module>spring-boot-starter-cache</module>
         <module>spring-boot-starter-webclient</module>
+        <module>spring-boot-common-bom</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
-                <artifactId>spring-boot-starter-activemq</artifactId>
-                <version>${in.zestic.springboot.common.activemq.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
-                <artifactId>spring-boot-starter-kafka</artifactId>
-                <version>${in.zestic.springboot.common.kafka.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
-                <artifactId>spring-boot-starter-retrofit</artifactId>
-                <version>${in.zestic.springboot.common.retrofit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
-                <artifactId>spring-boot-starter-common</artifactId>
-                <version>${in.zestic.springboot.common.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
 </project>

@@ -23,12 +23,11 @@ public class WebClientScannerRegistrar implements ImportBeanDefinitionRegistrar,
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
-        AnnotationAttributes attributes = AnnotationAttributes
-                .fromMap(metadata.getAnnotationAttributes(EnableWebClient.class.getName()));
+        AnnotationAttributes attributes = AnnotationAttributes.fromMap(metadata.getAnnotationAttributes(EnableWebClient.class.getName()));
         if (attributes == null) {
             return;
         }
-        // Scan the @RetrofitClient annotated interface under the specified path and register it to the BeanDefinitionRegistry
+        // Scan the @EnableWebClient annotated interface under the specified path and register it to the BeanDefinitionRegistry
         ClassPathRetrofitClientScanner scanner = new ClassPathRetrofitClientScanner(registry, classLoader);
         if (resourceLoader != null) {
             scanner.setResourceLoader(resourceLoader);
@@ -57,12 +56,10 @@ public class WebClientScannerRegistrar implements ImportBeanDefinitionRegistrar,
         return packagesToScan.toArray(new String[packagesToScan.size()]);
     }
 
-
     @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
-
 
     @Override
     public void setBeanClassLoader(ClassLoader classLoader) {

@@ -1,4 +1,6 @@
-package in.zestic.springboot.common.web.client.config;
+package in.zestic.springboot.common.web.client.handler;
+
+import in.zestic.springboot.common.web.client.config.WebClientProperties;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
