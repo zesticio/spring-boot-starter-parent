@@ -4,10 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>spring-boot-starter-common-parent</artifactId>
-        <groupId>in.zestic.springboot.common</groupId>
+        <groupId>in.zestic.common</groupId>
         <version>1.0.0</version>
     </parent>
-    <groupId>in.zestic.springboot.common</groupId>
     <artifactId>spring-boot-common-bom</artifactId>
     <name>spring-boot-common-bom</name>
     <description>Zestic common BOM</description>
@@ -16,33 +15,38 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
+                <groupId>in.zestic.common</groupId>
                 <artifactId>spring-boot-starter-activemq</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
+                <groupId>in.zestic.common</groupId>
                 <artifactId>spring-boot-starter-cache</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
+                <groupId>in.zestic.common</groupId>
                 <artifactId>spring-boot-starter-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
+                <groupId>in.zestic.common</groupId>
                 <artifactId>spring-boot-starter-kafka</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
+                <groupId>in.zestic.common</groupId>
                 <artifactId>spring-boot-starter-retrofit</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>in.zestic.springboot.common</groupId>
+                <groupId>in.zestic.common</groupId>
                 <artifactId>spring-boot-starter-webclient</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>in.zestic.common</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

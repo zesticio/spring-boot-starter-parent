@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>spring-boot-starter-common-parent</artifactId>
-        <groupId>in.zestic.springboot.common</groupId>
+        <groupId>in.zestic.common</groupId>
         <version>1.0.0</version>
     </parent>
     <artifactId>spring-boot-starter-activemq-test</artifactId>
@@ -16,7 +16,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>in.zestic.springboot.common</groupId>
+            <groupId>in.zestic.common</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=in.zestic.springboot.common.activemq.config.ActiveMQAutoConfiguration01
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=in.zestic.common.activemq.config.ActiveMQAutoConfiguration01

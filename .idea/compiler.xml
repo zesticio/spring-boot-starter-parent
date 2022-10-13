@@ -13,12 +13,16 @@
         <module name="spring-boot-starter-retrofit" />
         <module name="spring-boot-starter-kafka" />
         <module name="spring-boot-starter-cache" />
+        <module name="spring-boot-starter-security" />
         <module name="spring-boot-starter-kafka-test" />
         <module name="spring-boot-starter-activemq" />
+        <module name="spring-boot-common-example" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="spring-boot-common" target="11" />
+      <module name="spring-boot-common-bom" target="11" />
+      <module name="spring-boot-common-example" target="11" />
       <module name="spring-boot-keycloak-bom" target="11" />
       <module name="spring-boot-starter-activemq" target="11" />
       <module name="spring-boot-starter-activemq-test" target="11" />
@@ -27,11 +31,13 @@
       <module name="spring-boot-starter-kafka" target="11" />
       <module name="spring-boot-starter-kafka-test" target="11" />
       <module name="spring-boot-starter-retrofit" target="11" />
+      <module name="spring-boot-starter-security" target="11" />
       <module name="spring-boot-starter-webclient" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spring-boot-common-example" options="-parameters" />
       <module name="spring-boot-keycloak-bom" options="" />
       <module name="spring-boot-starter-activemq" options="-parameters" />
       <module name="spring-boot-starter-activemq-test" options="-parameters" />
@@ -40,6 +46,7 @@
       <module name="spring-boot-starter-kafka" options="-parameters" />
       <module name="spring-boot-starter-kafka-test" options="-parameters" />
       <module name="spring-boot-starter-retrofit" options="-parameters" />
+      <module name="spring-boot-starter-security" options="-parameters" />
       <module name="spring-boot-starter-webclient" options="-parameters" />
     </option>
   </component>

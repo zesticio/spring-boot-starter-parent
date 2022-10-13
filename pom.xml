@@ -8,7 +8,7 @@
         <artifactId>spring-boot-parent</artifactId>
         <version>1.0.1</version>
     </parent>
-    <groupId>in.zestic.springboot.common</groupId>
+    <groupId>in.zestic.common</groupId>
     <artifactId>spring-boot-starter-common-parent</artifactId>
     <name>spring-boot-starter-common-parent</name>
     <description>spring-boot-starter-common-parent</description>
@@ -17,11 +17,10 @@
 
     <properties>
         <tests.skip>true</tests.skip>
-
-        <in.zestic.springboot.common.version>1.0.0</in.zestic.springboot.common.version>
-        <in.zestic.springboot.common.activemq.version>1.0.0</in.zestic.springboot.common.activemq.version>
-        <in.zestic.springboot.common.kafka.version>1.0.0</in.zestic.springboot.common.kafka.version>
-        <in.zestic.springboot.common.retrofit.version>1.0.0</in.zestic.springboot.common.retrofit.version>
+        <in.zestic.common.version>1.0.0</in.zestic.common.version>
+        <in.zestic.common.activemq.version>1.0.0</in.zestic.common.activemq.version>
+        <in.zestic.common.kafka.version>1.0.0</in.zestic.common.kafka.version>
+        <in.zestic.common.retrofit.version>1.0.0</in.zestic.common.retrofit.version>
     </properties>
 
     <modules>
@@ -34,5 +33,7 @@
         <module>spring-boot-starter-cache</module>
         <module>spring-boot-starter-webclient</module>
         <module>spring-boot-common-bom</module>
+        <module>spring-boot-starter-security</module>
+        <module>spring-boot-common-example</module>
     </modules>
 </project>
