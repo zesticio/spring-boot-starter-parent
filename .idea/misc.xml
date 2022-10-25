@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/spring-boot-starter-security/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-common-example/pom.xml" />
         <option value="$PROJECT_DIR$/spring-boot-common-coin/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-boot-starter-redis/pom.xml" />
       </list>
     </option>
   </component>

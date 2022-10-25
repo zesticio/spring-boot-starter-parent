@@ -49,6 +49,11 @@
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>in.zestic.common</groupId>
+                <artifactId>spring-boot-starter-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

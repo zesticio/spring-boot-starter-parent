@@ -36,5 +36,6 @@
         <module>spring-boot-starter-security</module>
         <module>spring-boot-common-example</module>
         <module>spring-boot-common-coin</module>
+        <module>spring-boot-starter-redis</module>
     </modules>
 </project>
