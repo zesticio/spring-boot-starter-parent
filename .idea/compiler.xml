@@ -17,11 +17,13 @@
         <module name="spring-boot-starter-kafka-test" />
         <module name="spring-boot-starter-activemq" />
         <module name="spring-boot-common-example" />
+        <module name="spring-boot-common-coin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="spring-boot-common" target="11" />
       <module name="spring-boot-common-bom" target="11" />
+      <module name="spring-boot-common-coin" target="11" />
       <module name="spring-boot-common-example" target="11" />
       <module name="spring-boot-keycloak-bom" target="11" />
       <module name="spring-boot-starter-activemq" target="11" />
@@ -37,6 +39,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spring-boot-common-coin" options="-parameters" />
       <module name="spring-boot-common-example" options="-parameters" />
       <module name="spring-boot-keycloak-bom" options="" />
       <module name="spring-boot-starter-activemq" options="-parameters" />

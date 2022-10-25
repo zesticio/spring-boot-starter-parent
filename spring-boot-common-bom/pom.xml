@@ -9,7 +9,7 @@
     </parent>
     <artifactId>spring-boot-common-bom</artifactId>
     <name>spring-boot-common-bom</name>
-    <description>Zestic common BOM</description>
+    <description>spring-boot-common-bom</description>
     <packaging>pom</packaging>
 
     <dependencyManagement>

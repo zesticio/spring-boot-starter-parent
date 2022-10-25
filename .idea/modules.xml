@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/spring-boot-common.iml" filepath="$PROJECT_DIR$/spring-boot-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-common-bom/spring-boot-common-bom.iml" filepath="$PROJECT_DIR$/spring-boot-common-bom/spring-boot-common-bom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-common-coin/spring-boot-common-coin.iml" filepath="$PROJECT_DIR$/spring-boot-common-coin/spring-boot-common-coin.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-common-example/spring-boot-common-example.iml" filepath="$PROJECT_DIR$/spring-boot-common-example/spring-boot-common-example.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-activemq/spring-boot-starter-activemq.iml" filepath="$PROJECT_DIR$/spring-boot-starter-activemq/spring-boot-starter-activemq.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-activemq-test/spring-boot-starter-activemq-test.iml" filepath="$PROJECT_DIR$/spring-boot-starter-activemq-test/spring-boot-starter-activemq-test.iml" />

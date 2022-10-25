@@ -35,5 +35,6 @@
         <module>spring-boot-common-bom</module>
         <module>spring-boot-starter-security</module>
         <module>spring-boot-common-example</module>
+        <module>spring-boot-common-coin</module>
     </modules>
 </project>
