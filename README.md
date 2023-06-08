@@ -1,1 +1,1 @@
-# spring-boot-common
+# spring-boot-starter-parent
