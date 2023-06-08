@@ -1,0 +1,1 @@
+docker build -t zesticio/activemq:5.15.12 .
