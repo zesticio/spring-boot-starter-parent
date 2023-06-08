@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/spring-boot-common.iml" filepath="$PROJECT_DIR$/spring-boot-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spring-boot-common-bom/spring-boot-common-bom.iml" filepath="$PROJECT_DIR$/spring-boot-common-bom/spring-boot-common-bom.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spring-boot-common-coin/spring-boot-common-coin.iml" filepath="$PROJECT_DIR$/spring-boot-common-coin/spring-boot-common-coin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/spring-boot-common-example/spring-boot-common-example.iml" filepath="$PROJECT_DIR$/spring-boot-common-example/spring-boot-common-example.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-activemq/spring-boot-starter-activemq.iml" filepath="$PROJECT_DIR$/spring-boot-starter-activemq/spring-boot-starter-activemq.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-activemq-test/spring-boot-starter-activemq-test.iml" filepath="$PROJECT_DIR$/spring-boot-starter-activemq-test/spring-boot-starter-activemq-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-bom/spring-boot-starter-bom.iml" filepath="$PROJECT_DIR$/spring-boot-starter-bom/spring-boot-starter-bom.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-cache/spring-boot-starter-cache.iml" filepath="$PROJECT_DIR$/spring-boot-starter-cache/spring-boot-starter-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-coin/spring-boot-starter-coin.iml" filepath="$PROJECT_DIR$/spring-boot-starter-coin/spring-boot-starter-coin.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-common/spring-boot-starter-common.iml" filepath="$PROJECT_DIR$/spring-boot-starter-common/spring-boot-starter-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-example/spring-boot-starter-example.iml" filepath="$PROJECT_DIR$/spring-boot-starter-example/spring-boot-starter-example.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-kafka/spring-boot-starter-kafka.iml" filepath="$PROJECT_DIR$/spring-boot-starter-kafka/spring-boot-starter-kafka.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-kafka-test/spring-boot-starter-kafka-test.iml" filepath="$PROJECT_DIR$/spring-boot-starter-kafka-test/spring-boot-starter-kafka-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-parent.iml" filepath="$PROJECT_DIR$/spring-boot-starter-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-ratelimit/spring-boot-starter-ratelimit.iml" filepath="$PROJECT_DIR$/spring-boot-starter-ratelimit/spring-boot-starter-ratelimit.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-redis/spring-boot-starter-redis.iml" filepath="$PROJECT_DIR$/spring-boot-starter-redis/spring-boot-starter-redis.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-retrofit/spring-boot-starter-retrofit.iml" filepath="$PROJECT_DIR$/spring-boot-starter-retrofit/spring-boot-starter-retrofit.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-starter-security/spring-boot-starter-security.iml" filepath="$PROJECT_DIR$/spring-boot-starter-security/spring-boot-starter-security.iml" />

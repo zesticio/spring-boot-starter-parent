@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=in.zestic.common.retrofit.boot.RetrofitAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.zestic.retrofit.boot.RetrofitAutoConfiguration

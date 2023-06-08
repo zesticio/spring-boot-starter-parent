@@ -3,9 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>spring-boot-starter-common-parent</artifactId>
-        <groupId>in.zestic.common</groupId>
-        <version>1.0.0</version>
+        <groupId>io.zestic</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.0.1</version>
+        <!--To skip the local file search and directly search the parent POM in Maven repositories,
+        we need to explicitly set the relativePath to an empty value-->
+        <!--<relativePath/>--> <!-- lookup parent from repository -->
     </parent>
     <artifactId>spring-boot-starter-activemq</artifactId>
     <name>spring-boot-starter-activemq</name>
@@ -20,11 +23,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>in.zestic.common</groupId>
-            <artifactId>spring-boot-starter-common</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.zestic</groupId>
+            <artifactId>spring-boot-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -34,16 +43,6 @@
 
     <build>
         <finalName>${project.name}-${project.version}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
-                <configuration>
-                    <skipTests>${tests.skip}</skipTests>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
 </project>

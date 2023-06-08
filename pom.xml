@@ -4,23 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>in.zestic</groupId>
+        <groupId>io.zestic</groupId>
         <artifactId>spring-boot-parent</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.4</version>
     </parent>
-    <groupId>in.zestic.common</groupId>
-    <artifactId>spring-boot-starter-common-parent</artifactId>
-    <name>spring-boot-starter-common-parent</name>
-    <description>spring-boot-starter-common-parent</description>
-    <version>1.0.0</version>
+    <groupId>io.zestic</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <name>spring-boot-starter-parent</name>
+    <description>spring-boot-starter-parent</description>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <properties>
         <tests.skip>true</tests.skip>
-        <in.zestic.common.version>1.0.0</in.zestic.common.version>
-        <in.zestic.common.activemq.version>1.0.0</in.zestic.common.activemq.version>
-        <in.zestic.common.kafka.version>1.0.0</in.zestic.common.kafka.version>
-        <in.zestic.common.retrofit.version>1.0.0</in.zestic.common.retrofit.version>
     </properties>
 
     <modules>
@@ -29,13 +25,24 @@
         <module>spring-boot-starter-activemq-test</module>
         <module>spring-boot-starter-kafka</module>
         <module>spring-boot-starter-kafka-test</module>
+        <module>spring-boot-starter-ratelimit</module>
         <module>spring-boot-starter-common</module>
         <module>spring-boot-starter-cache</module>
         <module>spring-boot-starter-webclient</module>
-        <module>spring-boot-common-bom</module>
+        <module>spring-boot-starter-bom</module>
         <module>spring-boot-starter-security</module>
-        <module>spring-boot-common-example</module>
-        <module>spring-boot-common-coin</module>
+        <module>spring-boot-starter-example</module>
+        <module>spring-boot-starter-coin</module>
         <module>spring-boot-starter-redis</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.zestic</groupId>
+                <artifactId>spring-boot-core</artifactId>
+                <version>1.0.3</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

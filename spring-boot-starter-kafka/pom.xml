@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>spring-boot-starter-common-parent</artifactId>
-        <groupId>in.zestic.common</groupId>
-        <version>1.0.0</version>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>io.zestic</groupId>
+        <version>1.0.1</version>
     </parent>
     <artifactId>spring-boot-starter-kafka</artifactId>
     <name>spring-boot-starter-kafka</name>
@@ -28,9 +28,13 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>in.zestic.common</groupId>
+            <groupId>io.zestic</groupId>
             <artifactId>spring-boot-starter-common</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.zestic</groupId>
+            <artifactId>spring-boot-core</artifactId>
         </dependency>
 
         <dependency>
@@ -46,16 +50,6 @@
 
     <build>
         <finalName>${project.name}-${project.version}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
-                <configuration>
-                    <skipTests>${tests.skip}</skipTests>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
 </project>

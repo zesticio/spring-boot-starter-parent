@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=in.zestic.common.kafka.config.KafkaAutoConfiguration01
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.zestic.kafka.config.KafkaAutoConfiguration01

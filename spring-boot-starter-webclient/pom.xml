@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>spring-boot-starter-common-parent</artifactId>
-        <groupId>in.zestic.common</groupId>
-        <version>1.0.0</version>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>io.zestic</groupId>
+        <version>1.0.1</version>
     </parent>
     <artifactId>spring-boot-starter-webclient</artifactId>
     <name>spring-boot-starter-webclient</name>
@@ -22,7 +22,7 @@
         </dependency>
 
         <dependency>
-            <groupId>in.zestic.common</groupId>
+            <groupId>io.zestic</groupId>
             <artifactId>spring-boot-starter-common</artifactId>
             <version>${project.version}</version>
         </dependency>
