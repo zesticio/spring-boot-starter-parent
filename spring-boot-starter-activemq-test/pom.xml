@@ -21,9 +21,16 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>io.zestic</groupId>
+            <artifactId>spring-boot-starter-coin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

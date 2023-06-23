@@ -52,6 +52,11 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
     protected ActiveMQConnection connection = null;
     protected ActiveMQDestination destination = null;
 
+    protected Listener listener;
+
+    protected String id;
+    protected Integer instanceId;
+
     protected String primaryUri;
     protected String secondaryUri;
     protected String queueName;
@@ -70,7 +75,7 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
     public ActiveMQClient() {
     }
 
-    protected void create() throws ApplicationException {
+    public void connect() throws ApplicationException {
         String uri = "failover:("
                 + primaryUri + ","
                 + secondaryUri + ")?randomize=false";
@@ -113,7 +118,7 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
             connection = (ActiveMQConnection) factory.createConnection();
 
             logger.info("Set connection exception listener");
-            if(connectionExceptionListener != null)
+            if (connectionExceptionListener != null)
                 connection.setExceptionListener(connectionExceptionListener);
 
             /**
@@ -138,20 +143,19 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
             logger.info("Starting the connection");
             connection.start();
         } catch (JMSException ex) {
-            logger.error("Exception occurred, closing the connection");
+            if (listener != null) listener.onError(id, ex.getMessage());
             this.close();
-            throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_ESTABLISH_CONNECTION, ex.getMessage());
         }
     }
 
     @SneakyThrows
     public void close() {
-        logger.error("Shutting down the session");
-        if (session != null)
-            session.close();
-        logger.error("Shutting down the connection");
-        if (connection != null)
-            connection.close();
+        logger.error("shutting down the session");
+        if (session != null) session.close();
+        logger.error("shutting down the connection");
+        if (connection != null) connection.close();
+        if (listener != null) listener.onClose("");
+        if (listener != null) listener.onClose(id);
     }
 
     @Override
@@ -159,4 +163,12 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
         logger.error("Exception ", e);
         throw new ActiveMQRuntimeException(ActiveMQError.RTE_JMS_EXCEPTION, e.getMessage());
     }
+
+    public interface Listener {
+
+        public void onConnect(String id);
+        public void onClose(String id);
+        public void onError(String id, String description);
+    }
+
 }

@@ -45,6 +45,5 @@ public class ActiveMQProperties {
     private Boolean disableJmsMessageId = false;
     private JMSPriority jmsPriority = JMSPriority.NORMAL;
     private Boolean disableMessageTimestamp = false;
-
     private Boolean useTransaction = false;
 }

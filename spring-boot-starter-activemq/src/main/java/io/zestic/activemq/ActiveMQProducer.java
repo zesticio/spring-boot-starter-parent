@@ -19,16 +19,11 @@
 package io.zestic.activemq;
 
 import com.google.common.util.concurrent.RateLimiter;
-import io.zestic.activemq.exception.ActiveMQRuntimeException;
 import io.zestic.core.exception.ApplicationException;
-import io.zestic.core.exception.GenericError;
-import io.zestic.core.exception.NotImplementedException;
 import io.zestic.core.pdu.Pdu;
 import io.zestic.core.queue.Queue;
-import io.zestic.core.queue.QueueBuilder;
+import io.zestic.core.util.HexUtil;
 import io.zestic.core.util.IBuilder;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import org.apache.activemq.ActiveMQMessageProducer;
 import org.apache.activemq.command.ActiveMQObjectMessage;
@@ -39,7 +34,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
-import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 1. Acquire a JMS destination
@@ -51,73 +47,51 @@ public class ActiveMQProducer extends ActiveMQClient {
 
     private static final Logger logger = LoggerFactory.getLogger(ActiveMQProducer.class.getSimpleName());
 
-    private ActiveMQMessageProducer producer = null;
+    private AtomicInteger counter = new AtomicInteger();
+
+    private ActiveMQMessageProducer producer;
     private Queue queue;
     private RateLimiter rateLimiter;
 
-    public ActiveMQProducer(){}
-
     public ActiveMQProducer(Builder builder) {
-        primaryUri = builder.primaryUri;
-        secondaryUri = builder.secondaryUri;
-        username = builder.username;
-        password = builder.password;
-        queueName = builder.queueName;
-
-        queue = new QueueBuilder().build();
-        rateLimiter = RateLimiter.create(_THROUGHPUT);
+        this.primaryUri = builder.primaryUri;
+        this.secondaryUri = builder.secondaryUri;
+        this.username = builder.username;
+        this.password = builder.password;
+        this.queueName = builder.queueName;
+        this.instanceId = (builder.instance != null) ? builder.instance : 0;
+        id = "active-mq-producer" + "-" + (instanceId);
     }
 
-    protected void create() throws ApplicationException {
+    public void setListener(Listener listener) {
+        Objects.requireNonNull(listener, "listener cannot be null");
+        this.listener = listener;
+    }
+
+    public void connect() throws ApplicationException {
         try {
-            super.create();
-            logger.info("Creating destination");
+            super.connect();
+            /**
+             * lets create a internal queue for store and forward.
+             */
+            queue = new Queue.Builder().build();
+            rateLimiter = RateLimiter.create(_THROUGHPUT);
+            logger.info("creating destination");
             destination = (ActiveMQQueue) session.createQueue(queueName);
-            logger.info("Creating producer");
+            logger.info("creating producer");
             producer = (ActiveMQMessageProducer) session.createProducer(destination);
-            logger.info("If you are looking for good performance with messages, set delivery mode to be NON_PERSISTENT. " +
+            logger.info("if you are looking for good performance with messages, " +
+                    "set delivery mode to be NON_PERSISTENT. " +
                     "Or set the useAsyncSend property on connection factory to be true");
             producer.setDeliveryMode(DeliveryMode.PERSISTENT);
-        } catch (JMSException e) {
-            logger.error("Exception " + e.getMessage());
-            throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_CREATE_PRODUCER, e.getMessage());
+            listener.onConnect(id);
+        } catch (JMSException ex) {
+            if (listener != null) listener.onError(id, ex.getMessage());
         }
-    }
-
-    public void submit(Pdu message, Map<String, Object> optional) throws ApplicationException {
-    }
-
-    public void submit(Pdu message) throws ApplicationException {
-        if (session != null && session.isRunning() && producer != null) {
-            ActiveMQObjectMessage object = prepare();
-            if (object != null) {
-                object.setJMSDeliveryMode(jmsDeliveryMode.getIndex());
-                setJmsExpiration(jmsExpiration);
-                enableMessageTimestamp();
-                try {
-                    //The time that a message will expire, into milliseconds
-                    producer.send(object);
-                    if (session.getTransacted()) {
-                        session.commit();
-                    }
-                } catch (JMSException e) {
-                    logger.error("Exception " + e.getMessage());
-                    throw new ActiveMQRuntimeException(ActiveMQError.RTE_PRODUCER_UNABLE_TO_SUBMIT, e.getMessage());
-                }
-            }
-        } else {
-            logger.error("Either session or producer is not created properly");
-        }
-    }
-
-    @SneakyThrows
-    public void flush() throws ApplicationException {
-        throw new NotImplementedException(GenericError.RTE_METHOD_NOT_IMPL);
     }
 
     @SneakyThrows
     public void close() {
-        logger.error("Closing the producer");
         if (producer != null)
             producer.close();
         super.close();
@@ -129,11 +103,15 @@ public class ActiveMQProducer extends ActiveMQClient {
             try {
                 object = (ActiveMQObjectMessage) session.createObjectMessage();
             } catch (JMSException e) {
-                logger.error("Unable to create object message");
-                throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_CREATE_OBJECT_MESSAGE, e.getMessage());
+                if (listener != null) listener.onError(id, "unable to create object");
             }
         }
         return object;
+    }
+
+    public void enqueue(Pdu pdu) throws ApplicationException {
+        queue.enqueue(pdu);
+        counter.incrementAndGet();
     }
 
     private void setJmsExpiration(Long timeToLive) {
@@ -141,8 +119,7 @@ public class ActiveMQProducer extends ActiveMQClient {
             try {
                 producer.setTimeToLive(timeToLive);
             } catch (JMSException e) {
-                logger.error("Exception " + e.getMessage());
-                throw new ActiveMQRuntimeException(ActiveMQError.RTE_JMS_EXPIRATION, e.getMessage());
+                if (listener != null) listener.onError(id, e.getMessage());
             }
         }
     }
@@ -158,8 +135,7 @@ public class ActiveMQProducer extends ActiveMQClient {
                 producer.setDisableMessageID(true);
             }
         } catch (JMSException e) {
-            logger.error("Exception " + e.getMessage());
-            throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_SET_MESSAGE_ID, e.getMessage());
+            if (listener != null) listener.onError(id, e.getMessage());
         }
     }
 
@@ -167,13 +143,35 @@ public class ActiveMQProducer extends ActiveMQClient {
         try {
             producer.setDisableMessageTimestamp(false);
         } catch (JMSException e) {
-            logger.error("Exception " + e.getMessage());
-            throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_SET_MESSAGE_ID, e.getMessage());
+            if (listener != null) listener.onError(id, e.getMessage());
         }
     }
 
+    /**
+     * Process messages that are in queue
+     */
     @Override
     public void process() {
+        try {
+            if (!queue.isEmpty()) {
+                try {
+                    if (session != null && session.isRunning()) {
+                        ActiveMQObjectMessage object = (ActiveMQObjectMessage) session.createObjectMessage();
+                        Pdu pdu = queue.dequeue();
+                        object.setObject(queue.dequeue());
+                        object.setJMSType(HexUtil.toHexString(pdu.getCommandId()));
+                        producer.send(object);
+                        counter.decrementAndGet();
+                    }
+                } catch (JMSException e) {
+                    if (listener != null) listener.onError(id, e.getMessage());
+                }
+            }
+        } catch (Exception ex) {
+            if (listener != null) listener.onError(id, ex.getMessage());
+        } finally {
+            rateLimiter.acquire();
+        }
     }
 
     public static class Builder implements IBuilder<ActiveMQProducer> {
@@ -186,6 +184,7 @@ public class ActiveMQProducer extends ActiveMQClient {
         private Integer prefetchLimit;
         private Boolean useTransaction;
         private Integer throughput;
+        private Integer instance = 0;
 
         public Builder primaryUri(String primaryUri) {
             this.primaryUri = primaryUri;
@@ -227,10 +226,15 @@ public class ActiveMQProducer extends ActiveMQClient {
             return this;
         }
 
+        public Builder instance(Integer instance) {
+            this.instance = instance;
+            return this;
+        }
+
         @Override
         public ActiveMQProducer build() {
             ActiveMQProducer producer = new ActiveMQProducer(this);
-            producer.create();
+            producer.connect();
             return producer;
         }
     }

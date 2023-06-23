@@ -20,11 +20,8 @@ package io.zestic.activemq;
 
 import io.zestic.activemq.exception.ActiveMQRuntimeException;
 import io.zestic.core.exception.ApplicationException;
-import io.zestic.core.exception.NotImplementedException;
 import io.zestic.core.pdu.Pdu;
 import io.zestic.core.util.IBuilder;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import org.apache.activemq.ActiveMQMessageConsumer;
 import org.apache.activemq.command.ActiveMQQueue;
@@ -62,9 +59,9 @@ public class ActiveMQConsumer extends ActiveMQClient {
      *
      * @throws ApplicationException
      */
-    protected void create() throws ApplicationException {
+    public void connect() throws ApplicationException {
         try {
-            super.create();
+            super.connect();
             destination = (ActiveMQQueue) session.createQueue(queueName);
             consumer = (ActiveMQMessageConsumer) session.createConsumer(destination);
             consumer.start();
@@ -142,7 +139,7 @@ public class ActiveMQConsumer extends ActiveMQClient {
         @Override
         public ActiveMQConsumer build() {
             ActiveMQConsumer consumer = new ActiveMQConsumer(this);
-            consumer.create();
+            consumer.connect();
             return consumer;
         }
 

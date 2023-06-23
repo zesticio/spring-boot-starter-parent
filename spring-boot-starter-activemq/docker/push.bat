@@ -1,1 +1,0 @@
-docker push zesticio/activemq:5.15.12

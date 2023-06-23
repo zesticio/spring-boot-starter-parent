@@ -1,4 +1,4 @@
-package io.zestic.activemq;
+package io.zestic.activemq.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

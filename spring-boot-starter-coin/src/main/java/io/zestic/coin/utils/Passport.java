@@ -35,9 +35,9 @@ import io.zestic.coin.core.NetworkParameters;
 import org.apache.commons.codec.binary.Hex;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -50,13 +50,18 @@ public class Passport {
     private Passport() {
     }
 
-    public static String generate(String msisdn) {
+    public static String generate(String value) {
+        Objects.requireNonNull(value, "value must not be null");
         NetworkParameters params = NetworkParameters.prodNet();
-        BigInteger privKey = Base58.decodeToBigInteger(msisdn);
-        ECKey key = new ECKey(privKey);
-        logger.info("Address from private key is: " + key.toAddress(params).toString());
-        String passport = key.toAddress(params).toString();
-        return passport;
+        ECKey key = new ECKey(Base58.decodeToBigInteger(value));
+        return key.toAddress(params).toString();
+    }
+
+    public static String generate(Long value) {
+        Objects.requireNonNull(value, "value must not be null");
+        NetworkParameters params = NetworkParameters.prodNet();
+        ECKey key = new ECKey(Base58.decodeToBigInteger(Long.toString(value)));
+        return key.toAddress(params).toString();
     }
 
     public static void main(String[] args) {

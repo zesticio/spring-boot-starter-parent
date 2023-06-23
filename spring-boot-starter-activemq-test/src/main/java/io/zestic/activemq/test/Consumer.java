@@ -23,14 +23,14 @@ import io.zestic.core.util.ProcessingThread;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestConsumer extends ProcessingThread {
+public class Consumer extends ProcessingThread {
 
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestConsumer.class);
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Consumer.class);
 
     private final Integer THROUGHPUT = 2048;
     private RateLimiter rateLimiter;
 
-    public TestConsumer() {
+    public Consumer() {
         this.rateLimiter = RateLimiter.create(THROUGHPUT);
     }
 
