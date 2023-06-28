@@ -18,13 +18,8 @@
 
 package io.zestic.activemq;
 
-import io.zestic.activemq.config.ActiveMQProperties;
-
 public class ActiveMQFactory {
 
-    private ActiveMQProperties properties;
-
-    public ActiveMQFactory(ActiveMQProperties properties) {
-        this.properties = properties;
+    public ActiveMQFactory() {
     }
 }

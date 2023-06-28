@@ -19,8 +19,11 @@
 package io.zestic.activemq.test;
 
 import com.google.common.io.Files;
-import io.zestic.core.io.txt.FileReader;
-import io.zestic.core.util.ProcessingThread;
+import io.zestic.activemq.ActiveMQConsumer;
+import io.zestic.activemq.ActiveMQProducer;
+import io.zestic.activemq.Consumer;
+import io.zestic.activemq.ExceptionListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -34,29 +37,10 @@ public class Application implements CommandLineRunner {
 
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Consumer.class);
 
-    @Value("${spring.activemq.primary}")
-    private String primaryUri;
-
-    @Value("${spring.activemq.secondary}")
-    private String secondaryUri;
-
-    @Value("${spring.activemq.username}")
-    private String username;
-
-    @Value("${spring.activemq.password}")
-    private String password;
-
-    @Value("${spring.activemq.queue-name}")
-    private String queueName;
-
-    @Value("${spring.activemq.prefetch-limit}")
-    private String prefetchLimit;
-
-    @Value("${spring.activemq.instances}")
-    private Integer instances;
-
-    @Value("${spring.activemq.throughput}")
-    private Integer throughput;
+    @Autowired
+    private ActiveMQProducer producer;
+    @Autowired
+    private ActiveMQConsumer consumer;
 
     @Value("${spring.trigger.path}")
     private String path;
@@ -67,44 +51,27 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws JMSException {
-
-        Producer producer = new Producer.Builder()
-                .primaryUri(primaryUri)
-                .secondaryUri(secondaryUri)
-                .username(username)
-                .password(password)
-                .queueName(queueName)
-                .instances(instances)
-                .throughput(throughput)
-                .build();
         try {
-            //If both classes are in the same package, the protected method can be called.
-            //producer.create();
-            producer.start(new ProcessingThread.Subscriber() {
-
+            producer.setExceptionListener(new ExceptionListener() {
                 @Override
-                public void onStart() {
-                    System.out.println("producer initialized");
-                }
-
-                @Override
-                public void onStop() {
-                    System.out.println("producer stopped");
+                public void onException(Exception ex) {
+                    logger.error("", ex);
                 }
             });
+
+            producer.connect();
+            producer.start();
         } catch (InterruptedException e) {
-            System.err.println("producer stopped");
+            logger.error("", e);
         }
     }
 
     private void process() {
-
         for (File file : Files.fileTraverser().breadthFirst(new File(path))) {
             if (file.isFile()) {
                 System.out.println(file);
             }
         }
-
 //        new FileReader.Builder()
 //                .path(path + File.separator + "msisdn.txt")
 //                .subscriber(new FileReader.Subscriber() {

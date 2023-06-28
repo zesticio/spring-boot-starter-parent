@@ -20,7 +20,6 @@ package io.zestic.activemq;
 
 import io.zestic.activemq.exception.ActiveMQRuntimeException;
 import io.zestic.activemq.model.JMSDeliveryMode;
-import io.zestic.core.exception.ApplicationException;
 import io.zestic.core.util.ProcessingThread;
 import lombok.SneakyThrows;
 import org.apache.activemq.ActiveMQConnection;
@@ -52,11 +51,6 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
     protected ActiveMQConnection connection = null;
     protected ActiveMQDestination destination = null;
 
-    protected Listener listener;
-
-    protected String id;
-    protected Integer instanceId;
-
     protected String primaryUri;
     protected String secondaryUri;
     protected String queueName;
@@ -64,18 +58,16 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
     protected String password;
     protected Integer prefetchLimit = _PREFETCH_LIMIT;
     protected Boolean useTransaction = false;
-    protected Integer throughput;
+    protected Integer throughput = _THROUGHPUT;
     protected JMSDeliveryMode jmsDeliveryMode = JMSDeliveryMode.PERSISTENT;
     protected Boolean enableJmsExpiration = false;
     protected Long jmsExpiration;
     protected Boolean disableJmsMessageId = false;
 
-    protected ExceptionListener connectionExceptionListener;
-
     public ActiveMQClient() {
     }
 
-    public void connect() throws ApplicationException {
+    public void connect() throws JMSException {
         String uri = "failover:("
                 + primaryUri + ","
                 + secondaryUri + ")?randomize=false";
@@ -113,39 +105,33 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
         factory.setPrefetchPolicy(prefetch);
 
 
-        try {
-            logger.info("Establishing connection");
-            connection = (ActiveMQConnection) factory.createConnection();
+        logger.info("Establishing connection");
+        connection = (ActiveMQConnection) factory.createConnection();
 
-            logger.info("Set connection exception listener");
-            if (connectionExceptionListener != null)
-                connection.setExceptionListener(connectionExceptionListener);
+        logger.info("Set connection exception listener");
+        connection.setExceptionListener(this);
 
-            /**
-             * When consuming messages in auto acknowledge mode (set when creating the consumers’ session), ActiveMQ
-             * can acknowledge receipt of messages back to the broker in batches (to improve performance). The batch
-             * size is 65% of the prefetch limit for the Consumer. Also if message consumption is slow the batch will
-             * be sent every 300ms. You switch batch acknowledgment on by setting optimizeAcknowledge=true
-             */
-            connection.setOptimizeAcknowledge(true);
-            /**
-             * By default, a Consumer’s session will dispatch messages to the consumer in a separate thread. If you are
-             * using Consumers with auto acknowledge, you can increase throughput by passing messages straight through
-             * the Session to the Consumer by setting alwaysSessionAsync=false
-             */
-            connection.setAlwaysSessionAsync(false);
+        /**
+         * When consuming messages in auto acknowledge mode (set when creating the consumers’ session), ActiveMQ
+         * can acknowledge receipt of messages back to the broker in batches (to improve performance). The batch
+         * size is 65% of the prefetch limit for the Consumer. Also if message consumption is slow the batch will
+         * be sent every 300ms. You switch batch acknowledgment on by setting optimizeAcknowledge=true
+         */
+        connection.setOptimizeAcknowledge(true);
+        /**
+         * By default, a Consumer’s session will dispatch messages to the consumer in a separate thread. If you are
+         * using Consumers with auto acknowledge, you can increase throughput by passing messages straight through
+         * the Session to the Consumer by setting alwaysSessionAsync=false
+         */
+        connection.setAlwaysSessionAsync(false);
 
-            /**
-             * currently we setting it to client acknowledge
-             */
-            logger.info("Creating a session with acknowledgement to : CLIENT_ACKNOWLEDGE");
-            session = (ActiveMQSession) connection.createSession(useTransaction, ActiveMQSession.CLIENT_ACKNOWLEDGE);
-            logger.info("Starting the connection");
-            connection.start();
-        } catch (JMSException ex) {
-            if (listener != null) listener.onError(id, ex.getMessage());
-            this.close();
-        }
+        /**
+         * currently we setting it to client acknowledge
+         */
+        logger.info("Creating a session with acknowledgement to : CLIENT_ACKNOWLEDGE");
+        session = (ActiveMQSession) connection.createSession(useTransaction, ActiveMQSession.CLIENT_ACKNOWLEDGE);
+        logger.info("Starting the connection");
+        connection.start();
     }
 
     @SneakyThrows
@@ -154,21 +140,10 @@ public abstract class ActiveMQClient extends ProcessingThread implements Excepti
         if (session != null) session.close();
         logger.error("shutting down the connection");
         if (connection != null) connection.close();
-        if (listener != null) listener.onClose("");
-        if (listener != null) listener.onClose(id);
     }
 
     @Override
     public void onException(JMSException e) {
         logger.error("Exception ", e);
-        throw new ActiveMQRuntimeException(ActiveMQError.RTE_JMS_EXCEPTION, e.getMessage());
     }
-
-    public interface Listener {
-
-        public void onConnect(String id);
-        public void onClose(String id);
-        public void onError(String id, String description);
-    }
-
 }

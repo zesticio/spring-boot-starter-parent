@@ -1,4 +1,4 @@
-package io.zestic.activemq.test;
+package io.zestic.activemq;
 
 import io.zestic.activemq.ActiveMQProducer;
 import io.zestic.core.router.IRouter;

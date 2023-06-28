@@ -24,7 +24,6 @@ import io.zestic.core.pdu.Pdu;
 import io.zestic.core.queue.Queue;
 import io.zestic.core.util.HexUtil;
 import io.zestic.core.util.IBuilder;
-import lombok.SneakyThrows;
 import org.apache.activemq.ActiveMQMessageProducer;
 import org.apache.activemq.command.ActiveMQObjectMessage;
 import org.apache.activemq.command.ActiveMQQueue;
@@ -49,6 +48,7 @@ public class ActiveMQProducer extends ActiveMQClient {
 
     private AtomicInteger counter = new AtomicInteger();
 
+    private ExceptionListener listener;
     private ActiveMQMessageProducer producer;
     private Queue queue;
     private RateLimiter rateLimiter;
@@ -59,11 +59,10 @@ public class ActiveMQProducer extends ActiveMQClient {
         this.username = builder.username;
         this.password = builder.password;
         this.queueName = builder.queueName;
-        this.instanceId = (builder.instance != null) ? builder.instance : 0;
-        id = "active-mq-producer" + "-" + (instanceId);
+        this.throughput = builder.throughput;
     }
 
-    public void setListener(Listener listener) {
+    public void setExceptionListener(ExceptionListener listener) {
         Objects.requireNonNull(listener, "listener cannot be null");
         this.listener = listener;
     }
@@ -75,7 +74,7 @@ public class ActiveMQProducer extends ActiveMQClient {
              * lets create a internal queue for store and forward.
              */
             queue = new Queue.Builder().build();
-            rateLimiter = RateLimiter.create(_THROUGHPUT);
+            rateLimiter = RateLimiter.create(throughput);
             logger.info("creating destination");
             destination = (ActiveMQQueue) session.createQueue(queueName);
             logger.info("creating producer");
@@ -84,17 +83,20 @@ public class ActiveMQProducer extends ActiveMQClient {
                     "set delivery mode to be NON_PERSISTENT. " +
                     "Or set the useAsyncSend property on connection factory to be true");
             producer.setDeliveryMode(DeliveryMode.PERSISTENT);
-            listener.onConnect(id);
         } catch (JMSException ex) {
-            if (listener != null) listener.onError(id, ex.getMessage());
+            if (listener != null) listener.onException(ex);
         }
     }
 
-    @SneakyThrows
     public void close() {
-        if (producer != null)
-            producer.close();
-        super.close();
+        if (producer != null) {
+            try {
+                producer.close();
+                super.close();
+            } catch (JMSException ex) {
+                if (listener != null) listener.onException(ex);
+            }
+        }
     }
 
     private ActiveMQObjectMessage prepare() {
@@ -103,7 +105,7 @@ public class ActiveMQProducer extends ActiveMQClient {
             try {
                 object = (ActiveMQObjectMessage) session.createObjectMessage();
             } catch (JMSException e) {
-                if (listener != null) listener.onError(id, "unable to create object");
+                if (listener != null) listener.onException(e);
             }
         }
         return object;
@@ -119,7 +121,7 @@ public class ActiveMQProducer extends ActiveMQClient {
             try {
                 producer.setTimeToLive(timeToLive);
             } catch (JMSException e) {
-                if (listener != null) listener.onError(id, e.getMessage());
+                if (listener != null) listener.onException(e);
             }
         }
     }
@@ -135,7 +137,7 @@ public class ActiveMQProducer extends ActiveMQClient {
                 producer.setDisableMessageID(true);
             }
         } catch (JMSException e) {
-            if (listener != null) listener.onError(id, e.getMessage());
+            if (listener != null) listener.onException(e);
         }
     }
 
@@ -143,7 +145,7 @@ public class ActiveMQProducer extends ActiveMQClient {
         try {
             producer.setDisableMessageTimestamp(false);
         } catch (JMSException e) {
-            if (listener != null) listener.onError(id, e.getMessage());
+            if (listener != null) listener.onException(e);
         }
     }
 
@@ -164,14 +166,20 @@ public class ActiveMQProducer extends ActiveMQClient {
                         counter.decrementAndGet();
                     }
                 } catch (JMSException e) {
-                    if (listener != null) listener.onError(id, e.getMessage());
+                    if (listener != null) listener.onException(e);
                 }
             }
         } catch (Exception ex) {
-            if (listener != null) listener.onError(id, ex.getMessage());
+            if (listener != null) listener.onException(ex);
         } finally {
             rateLimiter.acquire();
         }
+    }
+
+    @Override
+    public void onException(JMSException e) {
+        logger.error("Exception ", e);
+        if (listener != null) listener.onException(e);
     }
 
     public static class Builder implements IBuilder<ActiveMQProducer> {
@@ -184,7 +192,6 @@ public class ActiveMQProducer extends ActiveMQClient {
         private Integer prefetchLimit;
         private Boolean useTransaction;
         private Integer throughput;
-        private Integer instance = 0;
 
         public Builder primaryUri(String primaryUri) {
             this.primaryUri = primaryUri;
@@ -226,15 +233,9 @@ public class ActiveMQProducer extends ActiveMQClient {
             return this;
         }
 
-        public Builder instance(Integer instance) {
-            this.instance = instance;
-            return this;
-        }
-
         @Override
         public ActiveMQProducer build() {
             ActiveMQProducer producer = new ActiveMQProducer(this);
-            producer.connect();
             return producer;
         }
     }

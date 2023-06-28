@@ -18,46 +18,29 @@
 
 package io.zestic.activemq.config;
 
-import io.zestic.activemq.ActiveMQConsumer;
-import io.zestic.activemq.ActiveMQProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties(ActiveMQProperties.class)
+@ConfigurationProperties(prefix = "spring.activemq")
 @ComponentScan(basePackages = {"io.zestic.activemq.*"})
-public class ActiveMQConfig implements ApplicationContextAware {
+public class ActiveMQAutoConfig implements ApplicationContextAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(ActiveMQConfig.class.getSimpleName());
+    private static final Logger logger = LoggerFactory.getLogger(ActiveMQAutoConfig.class.getSimpleName());
 
-    private final ActiveMQProperties properties;
     private ApplicationContext applicationContext;
 
-    public ActiveMQConfig(ActiveMQProperties properties) {
-        this.properties = properties;
+    public ActiveMQAutoConfig() {
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
-
-//    @Bean
-//    public ActiveMQConsumer activeMQConsumer() {
-//        logger.info("Creating activemq consumer bean");
-//        return new ActiveMQConsumer();
-//    }
-//
-//    @Bean
-//    public ActiveMQProducer activeMQProducer() {
-//        logger.info("Creating activemq producer bean");
-//        return new ActiveMQProducer();
-//    }
 }

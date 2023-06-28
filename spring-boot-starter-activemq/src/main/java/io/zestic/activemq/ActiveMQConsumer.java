@@ -18,17 +18,20 @@
 
 package io.zestic.activemq;
 
-import io.zestic.activemq.exception.ActiveMQRuntimeException;
+import com.google.common.util.concurrent.RateLimiter;
 import io.zestic.core.exception.ApplicationException;
 import io.zestic.core.pdu.Pdu;
+import io.zestic.core.queue.Queue;
 import io.zestic.core.util.IBuilder;
-import lombok.SneakyThrows;
 import org.apache.activemq.ActiveMQMessageConsumer;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import java.util.Objects;
 
 /**
  * Acquire a JMS destination
@@ -36,21 +39,33 @@ import javax.jms.JMSException;
  * Create a JMS consumer
  * Optionally register a JMS message listener
  */
-public class ActiveMQConsumer extends ActiveMQClient {
+public class ActiveMQConsumer extends ActiveMQClient implements MessageListener{
 
     private static final Logger logger = LoggerFactory.getLogger(ActiveMQConsumer.class.getSimpleName());
 
-    private ActiveMQMessageConsumer consumer = null;
+    private ExceptionListener listener;
+    private ActiveMQMessageConsumer consumer;
+    private Queue queue;
+    private RateLimiter rateLimiter;
+
+    private Integer max;
 
     public ActiveMQConsumer() {
     }
 
     public ActiveMQConsumer(Builder builder) {
-        primaryUri = builder.primaryUri;
-        secondaryUri = builder.secondaryUri;
-        username = builder.username;
-        password = builder.password;
-        queueName = builder.queueName;
+        this.primaryUri = builder.primaryUri;
+        this.secondaryUri = builder.secondaryUri;
+        this.username = builder.username;
+        this.password = builder.password;
+        this.queueName = builder.queueName;
+        this.throughput = builder.throughput;
+        max = throughput * 10;
+    }
+
+    public void setExceptionListener(ExceptionListener listener) {
+        Objects.requireNonNull(listener, "listener cannot be null");
+        this.listener = listener;
     }
 
     /**
@@ -62,40 +77,59 @@ public class ActiveMQConsumer extends ActiveMQClient {
     public void connect() throws ApplicationException {
         try {
             super.connect();
+            queue = new Queue.Builder().build();
+            rateLimiter = RateLimiter.create(throughput);
+            logger.info("creating destination");
             destination = (ActiveMQQueue) session.createQueue(queueName);
+            logger.info("creating consumer");
             consumer = (ActiveMQMessageConsumer) session.createConsumer(destination);
+            logger.info("setting up message listener");
+            consumer.setMessageListener(this);
+            logger.info("starting consumer");
             consumer.start();
-        } catch (JMSException e) {
-            throw new ActiveMQRuntimeException(ActiveMQError.RTE_UNABLE_CREATE_CONSUMER, e.getMessage());
-        }
-    }
-
-    @SneakyThrows
-    public void close() {
-        consumer.close();
-        super.close();
-    }
-
-    @SneakyThrows
-    protected Pdu receive() {
-        Pdu pdu = null;
-        javax.jms.Message message = null;
-        try {
-            if (session.isRunning() && consumer.getMessageSize() >= 1) {
-                message = consumer.receive(5);
-            }
         } catch (JMSException ex) {
-            logger.error("", ex);
-        } finally {
-            if (message != null) {
-                message.acknowledge();
-            }
+            if (listener != null) listener.onException(ex);
         }
-        return pdu;
+    }
+
+    public void close() {
+        try {
+            if (consumer != null) consumer.close();
+            super.close();
+        } catch (JMSException e) {
+            if (listener != null) listener.onException(e);
+        }
     }
 
     @Override
     public void process() {
+        while (queue.isEmpty()){
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        rateLimiter.acquire();
+    }
+
+    @Override
+    public void onMessage(Message message) {
+        while (queue.size()>= max) {
+            try {
+                Thread.sleep(1000L);
+            } catch (InterruptedException ex) {
+                if (listener != null) listener.onException(ex);
+            }
+        }
+        if (message != null) {
+            try {
+                logger.info(message.getJMSMessageID());
+                message.acknowledge();
+            } catch (JMSException ex) {
+                if (listener != null) listener.onException(ex);
+            }
+        }
     }
 
     public static class Builder implements IBuilder<ActiveMQConsumer> {
@@ -142,6 +176,5 @@ public class ActiveMQConsumer extends ActiveMQClient {
             consumer.connect();
             return consumer;
         }
-
     }
 }
